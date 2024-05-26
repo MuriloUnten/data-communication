@@ -1,1 +1,1 @@
-# This is an assignment for our Data Communication class.
+# This the final project for our Data Communication class.
