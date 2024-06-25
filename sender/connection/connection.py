@@ -11,7 +11,7 @@ def send_message(message, key, reciever_addr):
         client_socket.sendall(message.encode())
     except:
         print("Error sending message!")
-    finally:  
+    finally:
         client_socket.close()
 
 
@@ -20,13 +20,23 @@ def encrypt_xor_cipher(message, key):
     key_bytes = bytearray(key, 'utf-8')
 
     encrypted_bytes = bytearray(len(message_bytes))
-    
-    for i in range(len(message_bytes)): 
+
+    for i in range(len(message_bytes)):
         encrypted_bytes[i] = message_bytes[i] ^ key_bytes[i % len(key_bytes)]
-    
+
     encrypted_message = encrypted_bytes.decode('utf-8', errors='ignore')
     return encrypted_message
 
 
 def serialize_b8zs(message):
-    pass
+    message_bytes = bytearray(message, 'utf-8')
+
+
+def binaryString(message):
+    binaryStr = ""
+    for character in message:
+        charAsInt = ord(character)
+        binaryChar = "{0:b}".format(charAsInt)
+        while len(binaryChar) < 8:
+            binaryChar = '0' + binaryChar
+        binaryStr += binaryChar
