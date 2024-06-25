@@ -25,29 +25,45 @@ def encrypt_xor_cipher(message, key):
         encrypted_bytes[i] = message_bytes[i] ^ key_bytes[i % len(key_bytes)]
 
     encrypted_message = encrypted_bytes.decode('utf-8', errors='ignore')
+    print("encrypted:")
+    print(ascii(encrypted_message))
+    print(encrypted_message)
     return encrypted_message
 
 
 def serialize_b8zs(message):
     binStr = binaryString(message)
+    binLength = len(binStr)
     print(binStr)
-    output = ""
-    next1bit = "-"
+
+    output = []
+    last1bit = "-"
+    zeroCount = 0
 
     if binStr[0] == "1":
-        output += next1bit
-        next1bit = "+"
+        last1bit = "+"
+        output.append(last1bit)
     else:
-        output += "0"
+        output.append("0")
+        zeroCount += 1
 
-    for c in binStr[1:]:
-        if c == "1":
-            output += next1bit
-            next1bit = "+" if next1bit == "-" else "-"
+    for i in range(1, binLength):
+        if binStr[i] == "1":
+            last1bit = "+" if last1bit == "-" else "-"
+            output.append(last1bit)
+            zeroCount = 0
         else:
-            output += "0"
+            output.append("0")
+            zeroCount += 1
+            if zeroCount == 8:
+                output[i] = last1bit
+                output[i - 4] = last1bit
+                tmp = "+" if last1bit == "-" else "-"
+                output[i - 1] = tmp
+                output[i - 3] = tmp
+                zeroCount = 0
 
-    return output
+    return "".join(output)
 
 
 def binaryString(message):
@@ -62,4 +78,5 @@ def binaryString(message):
     return binaryStr
 
 
-print(serialize_b8zs("teste"))
+# string = "the quick brown fox jumps over the lazy dog"
+# print(serialize_b8zs(encrypt_xor_cipher(string, "A")))
