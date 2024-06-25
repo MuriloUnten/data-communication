@@ -10,14 +10,15 @@ def on_button_click():
     global msg_criptografada
 
     message = msg_text_box.get("1.0", tk.END).strip()
-    password = password_text_box.get("1.0", tk.END)
-    address = ip_text_box.get("1.0", tk.END)
+    password = password_text_box.get("1.0", tk.END).strip()
+    address = ip_text_box.get("1.0", tk.END).strip()
 
     msg_criptografada = conn.encrypt_xor_cipher(message, password)
     print(msg_criptografada)
     msg_escrita_label.config(text=ascii(msg_criptografada))
 
     if message:
+        print(message, password, address)
         conn.send_message(message, password, address)
 
 # Create the main window
