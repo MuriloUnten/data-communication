@@ -59,5 +59,16 @@ def decode_b8zs(encodedStr):
 
     return "".join(decodedStr)
 
+
+def binary_to_string(binary_string):
+    result = ""
+    for i in range(0, len(binary_string), 8):
+        byte = binary_string[i:i + 8]
+        decimal_value = int(byte, 2)
+        character = chr(decimal_value)
+        result += character
+    return result
+
 # string = input("encoded text: ")
-# print(decode_b8zs(string))
+# key = str(input("key: "))
+# print(decrypt_xor_cipher(binary_to_string(decode_b8zs(string)), key))

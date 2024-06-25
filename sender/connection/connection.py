@@ -78,5 +78,5 @@ def binaryString(message):
     return binaryStr
 
 
-string = "teste"
-print(encode_b8zs(string))
+# string = "The quick brown fox jumps over the lazy dog."
+# print(encode_b8zs(encrypt_xor_cipher(string, "123")))
