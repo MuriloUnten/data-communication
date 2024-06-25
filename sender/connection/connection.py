@@ -2,7 +2,7 @@ import socket
 
 def send_message(message, key, reciever_addr):
     encrypted_message = encrypt_xor_cipher(message, key)
-    serialized_message = serialize_b8zs(encrypted_message)
+    serialized_message = encode_b8zs(encrypted_message)
 
     reciever_address = (reciever_addr, 8080)
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -31,7 +31,7 @@ def encrypt_xor_cipher(message, key):
     return encrypted_message
 
 
-def serialize_b8zs(message):
+def encode_b8zs(message):
     binStr = binaryString(message)
     binLength = len(binStr)
     print(binStr)
@@ -78,5 +78,5 @@ def binaryString(message):
     return binaryStr
 
 
-# string = "the quick brown fox jumps over the lazy dog"
-# print(serialize_b8zs(encrypt_xor_cipher(string, "A")))
+string = "teste"
+print(encode_b8zs(string))
