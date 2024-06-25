@@ -8,7 +8,7 @@ def send_message(message, key, reciever_addr):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         client_socket.connect(reciever_address)
-        client_socket.sendall(message.encode())
+        client_socket.sendall(serialized_message.encode("latin1"))
     except:
         print("Error sending message!")
     finally:

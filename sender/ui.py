@@ -1,15 +1,15 @@
 import tkinter as tk
 import connection.connection as conn
 
-msg_escrita = None 
-msg_criptografada = None 
-msg_binario = None 
-msg_algoritmo = None 
+msg_escrita = None
+msg_criptografada = None
+msg_binario = None
+msg_algoritmo = None
 
 def on_button_click():
-    global msg_criptografada 
+    global msg_criptografada
 
-    message = msg_text_box.get("1.0",tk.END).strip()
+    message = msg_text_box.get("1.0", tk.END).strip()
     password = password_text_box.get("1.0", tk.END)
     address = ip_text_box.get("1.0", tk.END)
 

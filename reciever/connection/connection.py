@@ -18,7 +18,8 @@ def recieve():
             data = client_socket.recv(1024)
             if not data:
                 break
-            print(f"Received message: {data.decode()}")
+            dataStr = decrypt_xor_cipher(binary_to_string(decode_b8zs(data.decode('latin1'))), "123")
+            print(f"Received message: {dataStr}")
 
         client_socket.close()
 
@@ -72,3 +73,4 @@ def binary_to_string(binary_string):
 # string = input("encoded text: ")
 # key = str(input("key: "))
 # print(decrypt_xor_cipher(binary_to_string(decode_b8zs(string)), key))
+recieve()
