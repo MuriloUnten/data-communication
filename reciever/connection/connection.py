@@ -1,10 +1,11 @@
 import socket
 
 HOSTNAME = socket.gethostname()
-HOST = socket.gethostbyname(HOSTNAME)
+# HOST = socket.gethostbyname(HOSTNAME)
+HOST = "192.168.0.32"
 PORT = 8080
 
-def recieve():
+def recieve(password):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as reciever_socket:
         reciever_socket.bind((HOST, PORT))
 
@@ -20,7 +21,7 @@ def recieve():
                 if not data:
                     break
 
-                dataStr = decrypt_xor_cipher(binary_to_string(decode_b8zs(data.decode('latin1'))), "123")
+                dataStr = decrypt_xor_cipher(binary_to_string(decode_b8zs(data.decode('latin1'))), password)
                 print(f"Received message: {dataStr}")
 
         client_socket.close()
@@ -72,7 +73,10 @@ def binary_to_string(binary_string):
         result += character
     return result
 
+def getIp():
+    return HOST
+
 # string = input("encoded text: ")
 # key = str(input("key: "))
 # print(decrypt_xor_cipher(binary_to_string(decode_b8zs(string)), key))
-recieve()
+# recieve()
