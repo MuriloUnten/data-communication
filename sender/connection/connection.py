@@ -29,7 +29,25 @@ def encrypt_xor_cipher(message, key):
 
 
 def serialize_b8zs(message):
-    message_bytes = bytearray(message, 'utf-8')
+    binStr = binaryString(message)
+    print(binStr)
+    output = ""
+    next1bit = "-"
+
+    if binStr[0] == "1":
+        output += next1bit
+        next1bit = "+"
+    else:
+        output += "0"
+
+    for c in binStr[1:]:
+        if c == "1":
+            output += next1bit
+            next1bit = "+" if next1bit == "-" else "-"
+        else:
+            output += "0"
+
+    return output
 
 
 def binaryString(message):
@@ -40,3 +58,8 @@ def binaryString(message):
         while len(binaryChar) < 8:
             binaryChar = '0' + binaryChar
         binaryStr += binaryChar
+
+    return binaryStr
+
+
+print(serialize_b8zs("teste"))
