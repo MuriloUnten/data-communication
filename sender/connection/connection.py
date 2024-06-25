@@ -24,7 +24,7 @@ def encrypt_xor_cipher(message, key):
     for i in range(len(message_bytes)):
         encrypted_bytes[i] = message_bytes[i] ^ key_bytes[i % len(key_bytes)]
 
-    encrypted_message = encrypted_bytes.decode('utf-8', errors='ignore')
+    encrypted_message = encrypted_bytes.decode('latin1', errors='ignore')
     print("encrypted:")
     print(ascii(encrypted_message))
     print(encrypted_message)
