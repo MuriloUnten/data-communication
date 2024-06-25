@@ -15,7 +15,7 @@ def on_button_click():
 
     msg_criptografada = conn.encrypt_xor_cipher(message, password)
     print(msg_criptografada)
-    msg_escrita_label.config(text=msg_criptografada)
+    msg_escrita_label.config(text=ascii(msg_criptografada))
 
     if message:
         conn.send_message(message, password, address)
