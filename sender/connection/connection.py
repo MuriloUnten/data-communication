@@ -14,7 +14,7 @@ def send_message(message, key, reciever_addr):
 
 
 def encrypt_xor_cipher(message, key):
-    message_bytes = bytearray(message, 'utf-8')
+    message_bytes = bytearray(message, 'latin1')
     key_bytes = bytearray(key, 'utf-8')
 
     encrypted_bytes = bytearray(len(message_bytes))

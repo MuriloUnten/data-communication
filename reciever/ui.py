@@ -60,7 +60,7 @@ def checkForMessageUpdate():
             global password
 
             if password:
-                msg_escrita_label.config(text="Mensagem: " + message)
+                # msg_escrita_label.config(text="Mensagem: " + message)
                 print("Receiving")
 
                 msg_algoritmo = message
@@ -72,7 +72,7 @@ def checkForMessageUpdate():
 
                 msg_decriptada = conn.decrypt_xor_cipher(msg_criptografada, password)
                 plot_graph(msg_decriptada, canvas_msg_decriptada)
-                msg_decriptada_label.config(text="Mensagem decriptada: " + ascii(msg_decriptada))
+                msg_decriptada_label.config(text="Mensagem decriptada: " + msg_decriptada)
     if receive_thread_running.is_set():
         root.after(100, checkForMessageUpdate)  # Schedule the next check
 
@@ -159,10 +159,6 @@ def draw_y_axis(canvas, canvas_height, x_pos):
 root = tk.Tk()
 root.title("Simple GUI")
 
-#Create the text boxes
-msg_label = tk.Label(root, text="Mensagem: ")
-msg_label.pack(pady=5)
-
 password_label = tk.Label(root, text="Senha")
 password_label.pack(pady=5)
 
@@ -171,9 +167,6 @@ password_text_box.pack(pady=10)
 
 ip_label = tk.Label(root, text="Endereço de IP: " + HOST)
 ip_label.pack(pady=5)
-
-msg_escrita_label = tk.Label(root, text="Mensagem: ")
-msg_escrita_label.pack(pady=5)
 
 # Create the send button
 button = tk.Button(root, text="Submit", command=on_button_click)

@@ -36,6 +36,7 @@ def receive(passwordQueue, messageQueue):
 
 
 def decrypt_xor_cipher(message, key):
+    print("message:", message)
     message_bytes = bytearray(message, 'latin1')
     key_bytes = bytearray(key, 'utf-8')
 
@@ -54,6 +55,7 @@ def decrypt_xor_cipher(message, key):
 
 
 def decode_b8zs(encodedStr):
+    print("encodedStr:", encodedStr)
     decodedStr = []
     strLen = len(encodedStr)
     last1bit = "-"
@@ -76,6 +78,7 @@ def decode_b8zs(encodedStr):
 
 
 def binary_to_string(binary_string):
+    print("binary_string:", binary_string)
     result = ""
     for i in range(0, len(binary_string), 8):
         byte = binary_string[i:i + 8]
