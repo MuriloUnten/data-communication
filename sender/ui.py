@@ -141,7 +141,7 @@ password_text_box.pack(pady=10)
 
 # gráfico da mensagem criptografada
 canvas_msg_criptografada = tk.Canvas(root, width=canvas_width, height=canvas_height, bg="white")
-canvas_msg_criptografada .pack()
+canvas_msg_criptografada.pack()
 axis_padding = 20
 draw_x_axis(canvas_msg_criptografada, canvas_width, canvas_msg_criptografada.winfo_height() - axis_padding)
 draw_y_axis(canvas_msg_criptografada, canvas_height, axis_padding)

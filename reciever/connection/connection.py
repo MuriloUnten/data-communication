@@ -27,7 +27,7 @@ def receive(passwordQueue, messageQueue):
                 if not passwordQueue.empty():
                     password = passwordQueue.get()
 
-                dataStr = decrypt_xor_cipher(binary_to_string(decode_b8zs(data.decode('latin1'))), password)
+                dataStr = data.decode('latin1')
                 messageQueue.put(dataStr)
 
                 client_socket.close()
@@ -36,7 +36,7 @@ def receive(passwordQueue, messageQueue):
 
 
 def decrypt_xor_cipher(message, key):
-    message_bytes = bytearray(message, 'utf-8')
+    message_bytes = bytearray(message, 'latin1')
     key_bytes = bytearray(key, 'utf-8')
 
     encrypted_bytes = bytearray(len(message_bytes))
@@ -44,9 +44,12 @@ def decrypt_xor_cipher(message, key):
     for i in range(len(message_bytes)):
         encrypted_bytes[i] = message_bytes[i] ^ key_bytes[i % len(key_bytes)]
 
-    encrypted_message = encrypted_bytes.decode('utf-8', errors='ignore')
+    print("message_bytes: ", message_bytes)
+    print("encrypted_bytes: ", encrypted_bytes)
+    print("key_bytes: ", key_bytes)
+    encrypted_message = encrypted_bytes.decode('latin1', errors='ignore')
+    print("encrypted_message: ", encrypted_message)
     # print(ascii(encrypted_message))
-    # print(encrypted_message)
     return encrypted_message
 
 
@@ -81,9 +84,21 @@ def binary_to_string(binary_string):
         result += character
     return result
 
+
 def getIp():
     return HOST
 
+
+def binaryString(message):
+    binaryStr = ""
+    for character in message:
+        charAsInt = ord(character)
+        binaryChar = "{0:b}".format(charAsInt)
+        while len(binaryChar) < 8:
+            binaryChar = '0' + binaryChar
+        binaryStr += binaryChar
+
+    return binaryStr
 # string = input("encoded text: ")
 # key = str(input("key: "))
 # print(decrypt_xor_cipher(binary_to_string(decode_b8zs(string)), key))
