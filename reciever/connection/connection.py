@@ -1,24 +1,28 @@
 import socket
 
 HOSTNAME = socket.gethostname()
-HOST = socket.gethostbyname(HOSTNAME)
+# HOST = socket.gethostbyname(HOSTNAME)
+HOST = "192.168.0.32"
 PORT = 8080
 
-def recieve():
+def recieve(password):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as reciever_socket:
         reciever_socket.bind((HOST, PORT))
 
         reciever_socket.listen()
         print(f"Listening on {HOST}:{PORT}...")
 
-        client_socket, client_address = reciever_socket.accept()
-        print(f"Accepted connection from {client_address}")
-
         while True:
-            data = client_socket.recv(1024)
-            if not data:
-                break
-            print(f"Received message: {data.decode()}")
+            while True:
+                client_socket, client_address = reciever_socket.accept()
+                print(f"Accepted connection from {client_address}")
+                data = client_socket.recv(1024)
+
+                if not data:
+                    break
+
+                dataStr = decrypt_xor_cipher(binary_to_string(decode_b8zs(data.decode('latin1'))), password)
+                print(f"Received message: {dataStr}")
 
         client_socket.close()
 
@@ -33,8 +37,8 @@ def decrypt_xor_cipher(message, key):
         encrypted_bytes[i] = message_bytes[i] ^ key_bytes[i % len(key_bytes)]
 
     encrypted_message = encrypted_bytes.decode('utf-8', errors='ignore')
-    print(ascii(encrypted_message))
-    print(encrypted_message)
+    # print(ascii(encrypted_message))
+    # print(encrypted_message)
     return encrypted_message
 
 
@@ -69,6 +73,10 @@ def binary_to_string(binary_string):
         result += character
     return result
 
+def getIp():
+    return HOST
+
 # string = input("encoded text: ")
 # key = str(input("key: "))
 # print(decrypt_xor_cipher(binary_to_string(decode_b8zs(string)), key))
+# recieve()

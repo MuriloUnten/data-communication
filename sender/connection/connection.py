@@ -8,11 +8,9 @@ def send_message(message, key, reciever_addr):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         client_socket.connect(reciever_address)
-        client_socket.sendall(message.encode())
+        client_socket.sendall(serialized_message.encode("latin1"))
     except:
         print("Error sending message!")
-    finally:
-        client_socket.close()
 
 
 def encrypt_xor_cipher(message, key):
@@ -80,3 +78,4 @@ def binaryString(message):
 
 # string = "The quick brown fox jumps over the lazy dog."
 # print(encode_b8zs(encrypt_xor_cipher(string, "123")))
+# send_message("The quick brown fox jumps over the lazy dog.", "123", "192.168.100.10")

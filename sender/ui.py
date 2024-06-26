@@ -26,6 +26,7 @@ def on_button_click():
     msg_escrita_label.config(text=ascii(msg_criptografada))
 
     if message:
+        print(message, password, address)
         conn.send_message(message, password, address)
 
     msg_escrita = message  
