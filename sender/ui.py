@@ -8,6 +8,7 @@ msg_algoritmo = None
 
 canvas_width = 720
 canvas_height = 80
+canvas_height_b8zs = 120
 
 def on_button_click():
     global msg_criptografada
@@ -47,14 +48,11 @@ def plot_graph(message, canva):
     for i in range(len(bit_value)):
         bit_int.append(int(bit_value[i]))
 
-    #print(bit_int)
-    dot_size = int(canvas_width / (len(bit_value) * 3))
-    if dot_size == 0:
-        dot_size = 1
+    dot_size = round((canvas_width - 20) / (len(bit_int) * 2), 2)
+    if dot_size > 10:
+        dot_size = 10
 
-    dot_spacing = int(canvas_width / (len(bit_value))) - 1
-    if dot_spacing == 0:
-        dot_spacing = 1
+    dot_spacing = round((canvas_width - 20) / (len(bit_int)), 2)
 
     print(dot_size, dot_spacing)
     for bit in bit_int:
@@ -73,13 +71,11 @@ def plot_graph_b8zs(inputStr, canva):
     dot_spacing = 0
     x_pos = axis_padding + dot_spacing
 
-    dot_size = int(canvas_width / (len(inputStr) * 3))
-    if dot_size == 0:
-        dot_size = 1
+    dot_size = round((canvas_width - 20) / (len(inputStr) * 2), 2)
+    if dot_size > 10:
+        dot_size = 10
 
-    dot_spacing = int(canvas_width / (len(inputStr))) - 1
-    if dot_spacing == 0:
-        dot_spacing = 1
+    dot_spacing = round((canvas_width - 20) / (len(inputStr)), 2)
 
     for char in inputStr:
         position = None
@@ -164,11 +160,11 @@ msg_escrita_label = tk.Label(root, text="Mensagem")
 msg_escrita_label.pack(pady=5)
 
 # gráfico da mensagem criptografada
-canvas_msg_algoritmo = tk.Canvas(root, width=canvas_width, height=canvas_height, bg="white")
+canvas_msg_algoritmo = tk.Canvas(root, width=canvas_width, height=canvas_height_b8zs, bg="white")
 canvas_msg_algoritmo .pack()
 axis_padding = 20
 draw_x_axis(canvas_msg_algoritmo, canvas_width, canvas_msg_algoritmo.winfo_height() - axis_padding)
-draw_y_axis(canvas_msg_algoritmo, canvas_height, axis_padding)
+draw_y_axis(canvas_msg_algoritmo, canvas_height_b8zs, axis_padding)
 
 # Run the application
 root.mainloop()
