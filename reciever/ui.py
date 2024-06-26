@@ -1,13 +1,34 @@
 import tkinter as tk
 import connection.connection as conn
+import threading
 
 HOST = conn.getIp()
+receive_thread = None
 
 def on_button_click():
+    global receive_thread
     print("Button clicked")
     password = password_text_box.get("1.0", tk.END).strip()
-    conn.recieve(password)
-    print("Recieving")
+    if receive_thread is None or not receive_thread.is_alive():
+        receive_thread = threading.Thread(target=receive_message, args=(password,))
+        receive_thread.start()
+    else:
+        print("Receive thread is already running")
+
+def receive_message(password):
+    try:
+        message = conn.receive(password)
+        msg_escrita_label.config(text="Mensagem: " + message)
+        print("Receiving")
+    except Exception as e:
+        print(f"Error receiving message: {e}")
+
+def stop_receive_thread():
+    global receive_thread
+    if receive_thread is not None and receive_thread.is_alive():
+        receive_thread_running.clear()
+        receive_thread.join()
+        print("Receive thread stopped")
 
 # Create the main window
 root = tk.Tk()
@@ -26,7 +47,7 @@ password_text_box.pack(pady=10)
 ip_label = tk.Label(root, text="Endereço de IP: " + HOST)
 ip_label.pack(pady=5)
 
-msg_escrita_label = tk.Label(root, text="Mensagem")
+msg_escrita_label = tk.Label(root, text="Mensagem: ")
 msg_escrita_label.pack(pady=5)
 
 # Create the send button
