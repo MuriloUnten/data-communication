@@ -1,25 +1,34 @@
 import tkinter as tk
 import connection.connection as conn
 import threading
+import time
 
 HOST = conn.getIp()
 receive_thread = None
+receive_thread_running = threading.Event()
 
 def on_button_click():
     global receive_thread
     print("Button clicked")
+
     password = password_text_box.get("1.0", tk.END).strip()
     if receive_thread is None or not receive_thread.is_alive():
         receive_thread = threading.Thread(target=receive_message, args=(password,))
+        receive_thread_running.set()  # Set the event to start the thread
         receive_thread.start()
     else:
         print("Receive thread is already running")
+        stop_receive_thread()
+
 
 def receive_message(password):
     try:
-        message = conn.receive(password)
-        msg_escrita_label.config(text="Mensagem: " + message)
-        print("Receiving")
+        while receive_thread_running.is_set():
+            message = conn.receive(password)
+            msg_escrita_label.config(text="Mensagem: " + message)
+            receive_thread.start()
+            print("Receiving")
+            time.sleep(1)
     except Exception as e:
         print(f"Error receiving message: {e}")
 
