@@ -1,13 +1,16 @@
 import socket
+from queue import Queue
 
 HOSTNAME = socket.gethostname()
 # HOST = socket.gethostbyname(HOSTNAME)
 HOST = "192.168.0.32"
 PORT = 8080
 
-def receive(password):
+def receive(passwordQueue, messageQueue):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as reciever_socket:
         reciever_socket.bind((HOST, PORT))
+
+        password = passwordQueue.get()
 
         reciever_socket.listen()
         print(f"Listening on {HOST}:{PORT}...")
@@ -20,12 +23,17 @@ def receive(password):
 
                 if not data:
                     break
-
+                
+                if not passwordQueue.empty():
+                    password = passwordQueue.get()
+                
                 dataStr = decrypt_xor_cipher(binary_to_string(decode_b8zs(data.decode('latin1'))), password)
+                messageQueue.put(dataStr)
+
                
                 client_socket.close()
                 print(f"Received message: {dataStr}")
-                return dataStr
+                messageQueue.put(dataStr)
 
 
 
