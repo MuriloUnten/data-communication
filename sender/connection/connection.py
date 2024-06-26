@@ -78,4 +78,4 @@ def binaryString(message):
 
 # string = "The quick brown fox jumps over the lazy dog."
 # print(encode_b8zs(encrypt_xor_cipher(string, "123")))
-send_message("The quick brown fox jumps over the lazy dog.", "123", "192.168.100.10")
+# send_message("The quick brown fox jumps over the lazy dog.", "123", "192.168.100.10")

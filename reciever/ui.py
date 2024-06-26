@@ -16,7 +16,7 @@ def on_button_click():
 
     password = password_text_box.get("1.0", tk.END).strip()
     passwordQueue.put(password)
-    
+
     if receive_thread is None or not receive_thread.is_alive():
         receive_thread_running.set()  # Set the event to start the thread
         receive_thread = threading.Thread(target=receive_message, args=(passwordQueue, messageQueue))
@@ -28,14 +28,13 @@ def receive_message(passwordQueue, messageQueue):
     try:
         while receive_thread_running.is_set():
             root.after(100, checkForMessageUpdate)  # Schedule the next check
-            conn.receive(passwordQueue, messageQueue) 
+            conn.receive(passwordQueue, messageQueue)
     except Exception as e:
         print(f"Error receiving message: {e}")
 
 
 def checkForMessageUpdate():
     global messageQueue
-    print("queue", messageQueue) 
     if not messageQueue.empty():
         message = messageQueue.get()
         if message:

@@ -16,8 +16,8 @@ def on_button_click():
     global canvas_msg_escrita
 
     message = msg_text_box.get("1.0", tk.END).strip()
-    password = password_text_box.get("1.0", tk.END)
-    address = ip_text_box.get("1.0", tk.END)
+    password = password_text_box.get("1.0", tk.END).strip()
+    address = ip_text_box.get("1.0", tk.END).strip()
 
     msg_criptografada = conn.encrypt_xor_cipher(message, password)
     msg_algoritmo = conn.encode_b8zs(msg_criptografada)

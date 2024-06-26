@@ -3,7 +3,7 @@ from queue import Queue
 
 HOSTNAME = socket.gethostname()
 # HOST = socket.gethostbyname(HOSTNAME)
-HOST = "192.168.0.32"
+HOST = socket.gethostbyname(HOSTNAME)
 PORT = 8080
 
 def receive(passwordQueue, messageQueue):
@@ -23,18 +23,16 @@ def receive(passwordQueue, messageQueue):
 
                 if not data:
                     break
-                
+
                 if not passwordQueue.empty():
                     password = passwordQueue.get()
-                
+
                 dataStr = decrypt_xor_cipher(binary_to_string(decode_b8zs(data.decode('latin1'))), password)
                 messageQueue.put(dataStr)
 
-               
                 client_socket.close()
                 print(f"Received message: {dataStr}")
                 messageQueue.put(dataStr)
-
 
 
 def decrypt_xor_cipher(message, key):
